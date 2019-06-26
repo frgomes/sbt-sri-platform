@@ -1,5 +1,11 @@
 package sri.sbt.platform;
 
-import org.scalatest._
+import utest._
 
-class BaseTest extends FunSuite with BeforeAndAfter {}
+object BaseTest extends TestSuite {
+  val tests = this {
+    "pass" - {
+      assert(true)
+    }
+  }
+}

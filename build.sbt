@@ -1,8 +1,6 @@
 name := "sbt-sri-platform"
 
-//version := "2017.12.28-SNAPSHOT"
-
-scalaVersion := "2.10.6"
+scalaVersion := "2.12.8"
 
 sbtPlugin := true
 
@@ -27,7 +25,8 @@ bintrayRepository := "sbt-plugins"
 
 publishArtifact in Test := false
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.0-M3")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.0.0-M8")
 
 //Test
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % Test
+libraryDependencies += "com.lihaoyi" %% "utest" % "0.7.1" % Test
+testFrameworks += TestFramework("utest.runner.Framework")

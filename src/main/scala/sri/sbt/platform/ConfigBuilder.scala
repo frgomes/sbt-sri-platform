@@ -7,17 +7,19 @@ import org.scalajs.sbtplugin.ScalaJSPlugin
 
 object ConfigBuilder {
 
-  final val IOS = "ios"
-
+  final val IOS     = "ios"
   final val ANDROID = "android"
-
-  final val WEB = "web"
+  final val WEB     = "web"
 
   final val SJS_OUTPUT_PATH_ANDROID = "assets/js/scalajs-output-android.js"
+  final val SJS_OUTPUT_PATH_IOS     = "assets/js/scalajs-output-ios.js"
+  final val SJS_OUTPUT_PATH_WEB     = "assets/js/scalajs-output-web.js"
+  final val SJS_OUTPUT_PATH_UNKNOWN = "assets/scalajs-output-unknown-platform.js"
 
-  final val SJS_OUTPUT_PATH_IOS = "assets/js/scalajs-output-ios.js"
-
-  final val SJS_OUTPUT_PATH_WEB = "assets/js/scalajs-output-web.js"
+  final val SJS_INDEX_ANDROID = "index.android.js"
+  final val SJS_INDEX_IOS     = "index.ios.js"
+  final val SJS_INDEX_WEB     = "index.web.js"
+  final val SJS_INDEX_UNKNOWN = "index.unknown.js"
 
   val dev =
     Def.taskKey[Unit]("Generate mobile output file for fastOptJS")
@@ -26,25 +28,31 @@ object ConfigBuilder {
     Def.taskKey[Unit]("Generate mobile output file for fullOptJS")
 
   @inline
-  def getEntryFileName(config: Configuration) =
-    if (config.name == IOS) "index.ios.js"
-    else if (config.name == ANDROID) "index.android.js"
-    else "index.web.js"
+  def getEntryFileName(config: Configuration): String =
+    config.name match {
+      case ANDROID => SJS_INDEX_ANDROID
+      case IOS     => SJS_INDEX_IOS
+      case WEB     => SJS_INDEX_WEB
+      case _       => SJS_INDEX_UNKNOWN
+    }
 
   @inline
-  def getArtifactPath(config: Configuration) =
-    if (config.name == IOS) SJS_OUTPUT_PATH_IOS
-    else if (config.name == ANDROID) SJS_OUTPUT_PATH_ANDROID
-    else if (config.name == WEB) SJS_OUTPUT_PATH_WEB
-    else "assets/scalajs-output-unknown-platform.js"
+  def getArtifactPath(config: Configuration): String =
+    config.name match {
+      case ANDROID => SJS_OUTPUT_PATH_ANDROID
+      case IOS     => SJS_OUTPUT_PATH_IOS
+      case WEB     => SJS_OUTPUT_PATH_WEB
+      case _       => SJS_OUTPUT_PATH_UNKNOWN
+    }
 
   var isServerStarted: Boolean = false
 
   val shell: Seq[String] =
     if (sys.props("os.name").contains("Windows")) Seq("cmd", "/c")
     else Seq("bash", "-c")
-  val npmStart
-    : Seq[String] = shell :+ "react-native start server --transformer scalajsTransformer.js"
+
+  val npmStart: Seq[String] =
+    shell :+ "react-native start server --transformer scalajsTransformer.js"
 
   def buildConfig(config: Configuration) = {
     val aPath = getArtifactPath(config)
