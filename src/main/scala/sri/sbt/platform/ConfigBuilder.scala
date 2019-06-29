@@ -7,18 +7,21 @@ import org.scalajs.sbtplugin.ScalaJSPlugin
 
 object ConfigBuilder {
 
-  final val IOS     = "ios"
-  final val ANDROID = "android"
-  final val WEB     = "web"
+  final val PlatformIOS     = "ios"
+  final val PlatformANDROID = "android"
+  final val PlatformWEB     = "web"
+  final val PlatformEXPO    = "expo"
 
   final val SJS_OUTPUT_PATH_ANDROID = "assets/js/scalajs-output-android.js"
   final val SJS_OUTPUT_PATH_IOS     = "assets/js/scalajs-output-ios.js"
   final val SJS_OUTPUT_PATH_WEB     = "assets/js/scalajs-output-web.js"
+  final val SJS_OUTPUT_PATH_EXPO    = "assets/js/scalajs-output-expo.js"
   final val SJS_OUTPUT_PATH_UNKNOWN = "assets/scalajs-output-unknown-platform.js"
 
   final val SJS_INDEX_ANDROID = "index.android.js"
   final val SJS_INDEX_IOS     = "index.ios.js"
   final val SJS_INDEX_WEB     = "index.web.js"
+  final val SJS_INDEX_EXPO    = "index.expo.js"
   final val SJS_INDEX_UNKNOWN = "index.unknown.js"
 
   val dev =
@@ -30,19 +33,21 @@ object ConfigBuilder {
   @inline
   def getEntryFileName(config: Configuration): String =
     config.name match {
-      case ANDROID => SJS_INDEX_ANDROID
-      case IOS     => SJS_INDEX_IOS
-      case WEB     => SJS_INDEX_WEB
-      case _       => SJS_INDEX_UNKNOWN
+      case PlatformANDROID => SJS_INDEX_ANDROID
+      case PlatformIOS     => SJS_INDEX_IOS
+      case PlatformWEB     => SJS_INDEX_WEB
+      case PlatformEXPO    => SJS_INDEX_EXPO
+      case _               => SJS_INDEX_UNKNOWN
     }
 
   @inline
   def getArtifactPath(config: Configuration): String =
     config.name match {
-      case ANDROID => SJS_OUTPUT_PATH_ANDROID
-      case IOS     => SJS_OUTPUT_PATH_IOS
-      case WEB     => SJS_OUTPUT_PATH_WEB
-      case _       => SJS_OUTPUT_PATH_UNKNOWN
+      case PlatformANDROID => SJS_OUTPUT_PATH_ANDROID
+      case PlatformIOS     => SJS_OUTPUT_PATH_IOS
+      case PlatformWEB     => SJS_OUTPUT_PATH_WEB
+      case PlatformEXPO    => SJS_OUTPUT_PATH_EXPO
+      case _               => SJS_OUTPUT_PATH_UNKNOWN
     }
 
   var isServerStarted: Boolean = false
