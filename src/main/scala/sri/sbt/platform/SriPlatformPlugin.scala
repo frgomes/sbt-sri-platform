@@ -12,11 +12,11 @@ object SriPlatformPlugin extends AutoPlugin {
   override lazy val requires = ScalaJSPlugin
   object autoImport {
     lazy val Common  = config("common")
-    lazy val IOS     = config(PlatformIOS) extend (Common)
+    lazy val IOS     = config(PlatformIOS)     extend (Common)
     lazy val Android = config(PlatformANDROID) extend (Common)
-    lazy val Web     = config(PlatformWEB) extend (Common)
-    lazy val Expo    = config(PlatformWEB) extend (Common)
-    lazy val CustomCompile = config("compile") extend (IOS, Android, Expo, Common)
+    lazy val Web     = config(PlatformWEB)     extend (Common)
+    lazy val Expo    = config(PlatformEXPO)    extend (Common)
+    lazy val CustomCompile = config("compile") extend (IOS, Android, Web, Expo, Common)
   }
 
   import autoImport._

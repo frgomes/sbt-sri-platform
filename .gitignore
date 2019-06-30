@@ -1,35 +1,39 @@
-*~
+# project
 *.class
 *.log
+*.test.js
+*.test.js.map
+assets/js/scalajs-output*.js
+assets/js/scalajs-output*.js.map
 
-# sbt specific
+# SBT specific
 .cache/
 .history/
 .lib/
-dist/*
+dist/
 target/
 lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
 
+# Emacs
+*~
+*.ZILESAVE
+
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
 
-#Intellij
+# IntelliJ
 .idea
 *.iml
 
-#mac
+# Mac
 .DS_Store
 
-
-
-#node
-
+# Node
 node_modules/
 npm-debug.log
-
-
-#project
+yarn.lock
+package-lock.json
